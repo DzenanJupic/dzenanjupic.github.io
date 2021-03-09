@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/kasm/bootstrap.min-90f68156446e26b9.css">
     
     
+<!--    <link data-trunk href="main.css" rel="inline">-->
 
     <script src="bootstrap.bundle.min.js"></script>
     <script src="ace/ace.js"></script>
@@ -19,16 +20,13 @@
         outline: none;
     }
 </style></head>
-<!--<link data-trunk href="main.css" rel="inline">-->
 
 <body>
 <div id="app"></div>
-<script type="module">import init from '/kasm/index-9de6666f78ba158a.js';init('/kasm/index-9de6666f78ba158a_bg.wasm');</script>
+<script type="module">import init from '/kasm/index-90318db02082bbbf.js';init('/kasm/index-90318db02082bbbf_bg.wasm');</script>
 
 <script>
     let start_editor_interval = null;
-    let set_main_padding_interval = null;
-
     let editor = null;
 
     function start_editor() {
@@ -45,26 +43,6 @@
         }
     }
 
-    function set_main_padding() {
-        if (set_main_padding_interval !== null) {
-            try {
-                let header_height = document.getElementsByTagName("header")[0].offsetHeight;
-                let footer_height = document.getElementsByTagName("footer")[0].offsetHeight;
-                let main = document.getElementsByTagName("main")[0];
-                let ram_table = document.getElementById("ram-table");
-                let console = document.getElementById("console");
-
-                main.style.paddingTop = `${header_height}px`;
-                main.style.paddingBottom = `${footer_height}px`;
-                ram_table.style.maxHeight = `${main.offsetHeight - console.offsetHeight - header_height - footer_height}px`;
-
-                clearInterval(set_main_padding_interval);
-                set_main_padding_interval = null;
-            } catch (_) {
-            }
-        }
-    }
-
     function get_editor_value() {
         if (editor !== null) {
             return editor.getValue();
@@ -75,10 +53,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         start_editor_interval = setInterval(start_editor, 100);
-        set_main_padding_interval = setInterval(set_main_padding, 100);
-    });
-    document.addEventListener('resize', () => {
-        set_main_padding_interval = setInterval(set_main_padding, 100);
     });
 </script>
 
