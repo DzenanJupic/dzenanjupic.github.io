@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>KASM</title>
+
+    <link rel="stylesheet" href="/kasm/preview/bootstrap.min-1ff8977bd675aa48.css">
+    
+    
+
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="ace/ace.js"></script>
+<style>
+    html, body {
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    input:focus {
+        outline: none;
+    }
+</style>
+<link rel="preload" href="/kasm/preview/index-6c3c054226d62794_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/kasm/preview/index-6c3c054226d62794.js"></head>
+
+<body>
+<div id="app"></div>
+<script type="module">import init from '/kasm/preview/index-6c3c054226d62794.js';init('/kasm/preview/index-6c3c054226d62794_bg.wasm');</script>
+
+<script>
+    let start_editor_interval = null;
+    let editor = null;
+
+    function start_editor() {
+        if (start_editor_interval !== null) {
+            try {
+                editor = ace.edit("editor");
+
+                clearInterval(start_editor_interval);
+                start_editor_interval = null;
+
+                editor.setTheme("ace/theme/dracula");
+                editor.session.setMode("ace/mode/text");
+                editor.setFontSize(15);
+
+                let code = localStorage.getItem("code");
+                if (code !== null) {
+                    editor.setValue(code, -1);
+                    editor.clearSelection();
+                }
+
+                editor.getSession().on('change', function () {
+                    localStorage.setItem("code", get_code());
+                })
+            } catch (_) {
+            }
+        }
+    }
+
+    function get_code() {
+        if (editor !== null) {
+            return editor.getValue();
+        } else {
+            return null;
+        }
+    }
+
+    function set_editor_font_size(font_size) {
+        if (editor !== null) {
+            editor.setFontSize(font_size);
+        } else {
+            setTimeout(
+                () => set_editor_font_size(font_size),
+                100
+            )
+        }
+    }
+
+    function set_editor_error(row, text) {
+        if (editor !== null) {
+            editor.session.setAnnotations([{
+                row: row,
+                column: 1,
+                text: text,
+                type: "error"
+            }]);
+        }
+    }
+    
+    function clear_editor_annotations() {
+        if (editor !== null) {
+            editor.session.clearAnnotations();
+        }
+    }
+    
+    
+
+    document.addEventListener('DOMContentLoaded', () => {
+        start_editor_interval = setInterval(start_editor, 100);
+    });
+</script>
+
+</body></html>
