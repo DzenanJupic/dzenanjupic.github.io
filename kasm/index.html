@@ -3,7 +3,7 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <title>KASM</title>
 
-    <link rel="stylesheet" href="/kasm/bootstrap.min-1ff8977bd675aa48.css">
+    <link rel="stylesheet" href="/kasm/bootstrap.min-90f68156446e26b9.css">
     
     
 
@@ -19,12 +19,12 @@
         outline: none;
     }
 </style>
-<link rel="preload" href="/kasm/index-3b3bb37cba2c29c3_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/kasm/index-3b3bb37cba2c29c3.js"></head>
+<link rel="preload" href="/kasm/index-93b4c89707b6f4e3_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/kasm/index-93b4c89707b6f4e3.js"></head>
 
 <body>
 <div id="app"></div>
-<script type="module">import init from '/kasm/index-3b3bb37cba2c29c3.js';init('/kasm/index-3b3bb37cba2c29c3_bg.wasm');</script>
+<script type="module">import init from '/kasm/index-93b4c89707b6f4e3.js';init('/kasm/index-93b4c89707b6f4e3_bg.wasm');</script>
 
 <script>
     let start_editor_interval = null;
@@ -41,15 +41,15 @@
                 editor.setTheme("ace/theme/dracula");
                 editor.session.setMode("ace/mode/text");
                 editor.setFontSize(15);
-
-                let code = localStorage.getItem("code");
+                
+                let code = localStorage.getItem("editor_value");
                 if (code !== null) {
                     editor.setValue(code, -1);
                     editor.clearSelection();
                 }
 
                 editor.getSession().on('change', function () {
-                    localStorage.setItem("code", get_code());
+                    localStorage.setItem("editor_value", get_code());
                 })
             } catch (_) {
             }
